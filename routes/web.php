@@ -1,9 +1,5 @@
 <?php
 
-use App\Game;
-use Carbon\Carbon;
-use Naughtonium\LaravelDarkSky\DarkSky;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,6 +13,8 @@ use Naughtonium\LaravelDarkSky\DarkSky;
 
 Route::get('team/{team}', 'TeamController@index');
 
-Route::get('/weather', function() {
+Route::get('team/{team}/next', 'GameController@index');
 
-});
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

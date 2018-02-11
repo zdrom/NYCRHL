@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Game;
+use Goutte;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class checkSchedule extends Command
@@ -51,15 +53,22 @@ class checkSchedule extends Command
             //The Game ID
             $id = intval($node->filter('td')->eq(0)->text());
 
-
             //If the game is not in the DB, add it
             if (!Game::find($id)) {
 
-                App\Game::create([
+                preg_match('/\D*/', $node->filter('td')->eq(2)->text(), $matches);
+
+                $home_team = trim($matches[0]);
+
+                preg_match('/\D*/', $node->filter('td')->eq(4)->text(), $matches);
+
+                $away_team = trim($matches[0]);
+
+                Game::create([
 
                     'id' => intval($node->filter('td')->eq(0)->text()),
-                    'home_team' => $node->filter('td')->eq(2)->text(),
-                    'away_team' => $node->filter('td')->eq(4)->text(),
+                    'home_team' => $home_team,
+                    'away_team' => $away_team,
                     'date' => $dateTime,
                     'season' => 'SPRING2018'
 
