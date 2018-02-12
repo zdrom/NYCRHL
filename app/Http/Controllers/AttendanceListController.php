@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\AttendanceList;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 
 class AttendanceListController extends Controller
@@ -18,6 +19,8 @@ class AttendanceListController extends Controller
     	$response['attending'] = $input['attending'];
 
     	$response->save();
+
+    	return redirect('/team/' . Auth::user()->team_id);
 
     }
 }
