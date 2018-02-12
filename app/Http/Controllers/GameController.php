@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\AttendanceList;
 use App\Game;
 use App\Team;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Naughtonium\LaravelDarkSky\DarkSky;
@@ -28,7 +29,15 @@ class GameController extends Controller
 						  ->where('team_id', $team->id)
 						  ->get();
 
-		return view('game.index', compact('team', 'game', 'chanceOfRainAtGameTime', 'attendanceList'));
+		$attendance = [];
+
+		foreach ($attendanceList as $response => $response_details) :
+			
+			$attendance[User::find($response_details['user_id'])->name] = $response_details['attending'];
+
+		endforeach;
+
+		return view('game.index', compact('team', 'game', 'chanceOfRainAtGameTime', 'attendance'));
 
 	}
 

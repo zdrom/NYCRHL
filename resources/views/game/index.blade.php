@@ -30,26 +30,51 @@
 		</div>
 	</div>
 
-	<div class="card card-inverse card-outline-danger mb-2">
-		<h4 class="card-header">Attendance</h4>
-		<div class="card-block">
-
-			<ul class="list-group list-group-flush">
-
-				@foreach($attendanceList as $player => $player_info)
-
-					<li class="list-group-item bg-inverse li">
-						
-						{{ dd($player_info) }}
-
-					</li>
-
-				@endforeach
-			</ul>
-
-			
-
+	<div class="card card-outline-success mb-2">
+		<div class="card-header bg-success">
+			<h5 class="mb-0">In</h5>
 		</div>
+		<ul class="list-group list-group-flush">
+	
+			@foreach($attendance as $name => $response)
+				@if($response == 'yes')
+				<li class="list-group-item bg-inverse card-inverse">{{ $name }}</li>
+				@endif
+			@endforeach
+
+		</ul>
+	</div>
+
+	<div class="card card-outline-danger mb-2">
+		<div class="card-header bg-danger">
+			<h5 class="mb-0">Out</h5>
+		</div>
+		<ul class="list-group list-group-flush">
+	
+			@foreach($attendance as $name => $response)
+				@if($response == 'no')
+				<li class="list-group-item list-group-item bg-inverse card-inverse">{{ $name }}</li>
+				@endif
+			@endforeach
+
+		</ul>
+	</div>
+
+	<div class="card card-outline-secondary ">
+		<div class="card-header">
+			<h5 class="mb-0">No Response</h5>
+		</div>
+		<ul class="list-group list-group-flush">
+	
+			@foreach($attendance as $name => $response)
+				@if($response == 'NR')
+				<li class="list-group-item list-group-item bg-inverse card-inverse">{{ $name }}</li>
+				@endif
+			@endforeach
+
+		</ul>
+	</div>
+
 	</div>
 
 @endsection
