@@ -1,35 +1,33 @@
 @extends('layouts.master')
 
-@include('layouts.navbar')
-
 @section('content')
 
 
 @foreach($games as $game => $details)
 
-	@component('games.game')
+	@component('schedule.game')
+
+		@slot('url')
+		
+			{{ Request::url() }}/game/{{ $details->id }}
+
+		@endslot
 
 		@slot('header')
 
-			{{ $details->home_team }} vs. {{ $details->away_team }}
- 
+			{{ \Carbon\Carbon::parse($details->date)->format('l, F j') }} 
 		@endslot
 
 		@slot('title')
 
-			{{ $details->date }} <small class="text-muted">{{ \Carbon\Carbon::parse($details->date)->diffForHumans() }}</small>
+			{{ \Carbon\Carbon::parse($details->date)->format('g:i a') }} <small class="text-muted">{{ \Carbon\Carbon::parse($details->date)->diffForHumans() }}</small>
 
 		@endslot
 
 		@slot('body')
 
-		<figure class="icons">
-		        <canvas id="rain" width="16" height="16">
-		        </canvas>
-		</figure>
+		{{ $details->home_team }} vs. {{ $details->away_team }}
 
-{{-- 			{{ \App\Weather::gameTimeForecast($details->date)['summary'] }}
- --}}
 		@endslot
 
 	@endcomponent

@@ -5,10 +5,17 @@
   <a class="navbar-brand" href="#">🏒</a>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/team/{{ Auth::user()->team_id }}/next" >Next Up<span class="sr-only">(current)</span></a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/team/{{ Auth::user()->team_id }}" >Schedule<span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto">
       <li class="nav-item">
         <a target="#" class="nav-link" href="http://nycrhl.pointstreaksites.com/view/nycrhl/home-page-657">League Site</a>
       </li>
