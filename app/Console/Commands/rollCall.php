@@ -71,12 +71,10 @@ class RollCall extends Command
                 if ($response_details->attending == 'NR') :
 
                     $user = User::find($response_details['user_id']);
+
+                    $message = Carbon::parse($game_details['date'])->format('D, M j \a\t h:m a') . "\n\nCan you make it?\n\nYes\n" . env('APP_URL') . "/rollCall?&attendance_id=" . $response_details['id'] . "&attending=yes" . "\n\nNo\nLink";
                     
-                    Nexmo::message()->send([
-                        'to'   => $user->phone,
-                        'from' => '12023502861',
-                        'text' => Carbon::parse($game_details['date'])->format('D, M j \a\t h:m a') . "\n\nCan you make it?\n\nYes\n" . env('APP_URL') . "/rollCall?&attendance_id=" . $response_details['id'] . "&attending=yes" . "\n\nNo\nLink"
-                    ]); 
+                    Twilio::message($user->phone, $message);
 
                 endif;
                 

@@ -8,6 +8,7 @@ use App\Team;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Naughtonium\LaravelDarkSky\DarkSky;
 
 class GameController extends Controller
@@ -21,9 +22,7 @@ class GameController extends Controller
 
 		$forecast = new DarkSky;
 
-		$forecast = $forecast->location(40.7848427,-73.9514865)->atTime($gameTimestamp)->currently();
-
-		$chanceOfRainAtGameTime = $forecast->precipProbability * 100 . '%';
+		$forecast = $forecast->location(40.7848427,-73.9514865)->atTime($gameTimestamp)->get('daily', 'currently');
 
 		$attendanceList = AttendanceList::where('game_id', $game->id)
 						  ->where('team_id', $team->id)
@@ -40,5 +39,33 @@ class GameController extends Controller
 		return view('game.index', compact('team', 'game', 'chanceOfRainAtGameTime', 'attendance'));
 
 	}
+
+	public function cancel()
+	{	
+
+		$game = Game::find(request()->game_id);
+		$game->canceled = 1;
+		$game->note = request()->note;
+		$game->save();
+
+		return back();
+		
+
+	}
+
+	public function reschedule()
+	{
+
+		$game = Game::find(request()->game_id);
+		$game->canceled = 0;
+		$game->note = NULL;
+		$game->date = request()->date;
+		$game->save();
+
+		return back();
+
+	}
+
+
 
 }

@@ -23,4 +23,18 @@ class AttendanceListController extends Controller
     	return redirect('/team/' . Auth::user()->team_id);
 
     }
+
+    public function status()
+    {
+    	$response = AttendanceList::where('user_id', Auth::id())
+    	->where('game_id', request()->game_id)
+    	->first();
+
+    	$response->attending = request()->status;
+
+    	$response->save();
+
+    	return back();
+
+    }
 }
