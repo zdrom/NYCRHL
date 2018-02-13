@@ -14,6 +14,11 @@ use Carbon\Carbon;
 |
 */
 
+Route::get('/', function ()
+{
+	return redirect()->route('home');
+});
+
 Route::get('team/{team}', 'TeamController@index');
 
 Route::get('team/{team}/next', 'GameController@index');
