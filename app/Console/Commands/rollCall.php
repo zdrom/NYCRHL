@@ -95,8 +95,6 @@ class RollCall extends Command
                 $message .= Shortener::shorten(env('APP_URL') . '/player/status?user=' . $user_info['id'] . '&game_id=' . $game_info['id'] . '&attending=no') . "\n\n";
 
             endforeach;
-
-            dd($message);
             
             Twilio::message($user_info['phone'], $message);
 
