@@ -65,6 +65,7 @@ class RollCall extends Command
                 //If the game is within the next 5 weekdays
                 if (Carbon::parse($game_info->date . 'EST')->diffInWeekdays($current_time) <= 5 && Carbon::parse($game_info->date . 'EST')->diffInWeekdays($current_time) >= 0) :
 
+
                     $attending = AttendanceList::where('user_id', $user_info['id'])
                     ->where('game_id', $game_info->id)
                     ->value('attending');
@@ -78,7 +79,11 @@ class RollCall extends Command
 
             endforeach;
 
-            $gameOrGames = count($upcoming_games_with_no_response) . (count($upcoming_games_with_no_response) !== 1) ? "games" : "game";
+            if (!count($upcoming_games_with_no_response)) :
+               continue;
+            endif;
+
+            $gameOrGames = (count($upcoming_games_with_no_response) !== 1) ? "games" : "game";
 
             $message = "🏒" .  Team::find($user_info['team_id'])->name . "🏒" . "\n\nYou have " . count($upcoming_games_with_no_response) . " upcoming " . $gameOrGames . "\n\n";
 
@@ -90,6 +95,8 @@ class RollCall extends Command
                 $message .= Shortener::shorten(env('APP_URL') . '/player/status?user=' . $user_info['id'] . '&game_id=' . $game_info['id'] . '&attending=no') . "\n\n";
 
             endforeach;
+
+            dd($message);
             
             Twilio::message($user_info['phone'], $message);
 
