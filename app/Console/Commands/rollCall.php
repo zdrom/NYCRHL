@@ -2,12 +2,14 @@
 
 namespace App\Console\Commands;
 
+use Twilio;
 use App\AttendanceList;
 use App\Game;
+use App\Team;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Nexmo\Laravel\Facade\Nexmo;
+use Shortener;
 
 class RollCall extends Command
 {
@@ -16,7 +18,7 @@ class RollCall extends Command
      *
      * @var string
      */
-    protected $signature = 'Schedule:RollCall';
+    protected $signature = 'AttendanceList:RollCall';
 
     /**
      * The console command description.
@@ -43,45 +45,55 @@ class RollCall extends Command
     public function handle()
     {
 
-        $currentDate = Carbon::now('America/New_York')->format('Y\-m\-d H\:i\:s');
-        
-        //Get all games that have not already been played
-        $games = Game::whereDate('date', '>=', $currentDate)
-        ->get()
-        ->toArray();
+        $users = User::all();
 
-        //Get all games that have not already been played and are within 5 weekdays from the current date
-        
+        foreach ($users as $user => $user_info) :
+            
+            //get the team ID
+            $team = Team::find($user_info['team_id']);
 
-        $upcomingGames = array_filter($games, function ($game)
-        {
-            if (Carbon::now('America/New_York')->diffInWeekdays(Carbon::parse($game['date'])) <= 5) :
-                return true;
-            endif;
-        });
+            //Get all the games for that team
+            $games = $team->games();
 
-        //loop through all upcoming games and check for an attending response for each player. If no response, send a text asking the player if he can make it
-        foreach ($upcomingGames as $game => $game_details) :
+            $current_time = Carbon::now('America/New_York');
 
-            $attendance_list = AttendanceList::where('game_id', $game_details['id'])
-            ->get();
+            //This will store all the games within the next 5 weekdays where the user has not responded
+            $upcoming_games_with_no_response = [];
 
-            foreach ($attendance_list as $response => $response_details) :
+            foreach ($games as $game => $game_info) :
 
-                if ($response_details->attending == 'NR') :
+                //If the game is within the next 5 weekdays
+                if (Carbon::parse($game_info->date . 'EST')->diffInWeekdays($current_time) <= 5 && Carbon::parse($game_info->date . 'EST')->diffInWeekdays($current_time) >= 0) :
 
-                    $user = User::find($response_details['user_id']);
+                    $attending = AttendanceList::where('user_id', $user_info['id'])
+                    ->where('game_id', $game_info->id)
+                    ->value('attending');
 
-                    $message = Carbon::parse($game_details['date'])->format('D, M j \a\t h:m a') . "\n\nCan you make it?\n\nYes\n" . env('APP_URL') . "/rollCall?&attendance_id=" . $response_details['id'] . "&attending=yes" . "\n\nNo\nLink";
-                    
-                    Twilio::message($user->phone, $message);
+                    //If the user has not responded with a status
+                    if ($attending == 'NR') :
+                        array_push($upcoming_games_with_no_response, $game_info);
+                    endif;
 
                 endif;
-                
+
             endforeach;
 
-        endforeach;
+            $gameOrGames = count($upcoming_games_with_no_response) . (count($upcoming_games_with_no_response) !== 1) ? "games" : "game";
 
+            $message = "🏒" .  Team::find($user_info['team_id'])->name . "🏒" . "\n\nYou have " . count($upcoming_games_with_no_response) . " upcoming " . $gameOrGames . "\n\n";
+
+            foreach ($upcoming_games_with_no_response as $game => $game_info) :
+                $message .= Carbon::parse($game_info['date'])->format('M j \a\t g:i a') . "\n\n";
+                $message .= "In\n";
+                $message .= Shortener::shorten(env('APP_URL') . '/player/status?user=' . $user_info['id'] . '&game_id=' . $game_info['id'] . '&attending=yes') . "\n\n";
+                $message .= "Out\n";
+                $message .= Shortener::shorten(env('APP_URL') . '/player/status?user=' . $user_info['id'] . '&game_id=' . $game_info['id'] . '&attending=no') . "\n\n";
+
+            endforeach;
+            
+            Twilio::message($user_info['phone'], $message);
+
+        endforeach;
 
     }
 }

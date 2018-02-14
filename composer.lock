@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e9b9cdd58121281fb8a3dd82e8fe9d08",
+    "content-hash": "5a0b1adf7cbefdec3d65cbbefe638072",
     "packages": [
         {
             "name": "aloha/twilio",
@@ -1306,6 +1306,154 @@
             "time": "2017-12-18T16:25:11+00:00"
         },
         {
+            "name": "leadthread/laravel-shortener",
+            "version": "6.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/leadthread/laravel-shortener.git",
+                "reference": "d4998a81e71f8f742cbd16f601f845f1eb77a0ef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/leadthread/laravel-shortener/zipball/d4998a81e71f8f742cbd16f601f845f1eb77a0ef",
+                "reference": "d4998a81e71f8f742cbd16f601f845f1eb77a0ef",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^5.0",
+                "leadthread/php-bitly": "^4.0",
+                "leadthread/php-google-shortener": "^2.0",
+                "php": "^5.4|^7.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^3.1",
+                "phpunit/phpunit": "^4.8 || ^5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LeadThread\\Shortener\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tyler Arbon",
+                    "email": "tylercd100@gmail.com"
+                }
+            ],
+            "homepage": "https://github.com/leadthread/laravel-shortener",
+            "keywords": [
+                "laravel",
+                "leadthread",
+                "shortener",
+                "tylercd100",
+                "url",
+                "url shortener"
+            ],
+            "time": "2017-04-20T01:02:09+00:00"
+        },
+        {
+            "name": "leadthread/php-bitly",
+            "version": "4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/leadthread/php-bitly.git",
+                "reference": "1ffdac16afbb192862f71abe2e263161727dee84"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/leadthread/php-bitly/zipball/1ffdac16afbb192862f71abe2e263161727dee84",
+                "reference": "1ffdac16afbb192862f71abe2e263161727dee84",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.0",
+                "php": "^5.5.9|^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8|^5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LeadThread\\Bitly\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tyler Arbon",
+                    "email": "tylercd100@gmail.com"
+                }
+            ],
+            "description": "Easily shorten URLs in PHP",
+            "homepage": "https://github.com/leadthread/php-bitly",
+            "keywords": [
+                "bitly",
+                "shorten",
+                "tylercd100",
+                "url",
+                "zenapply"
+            ],
+            "time": "2017-04-20T00:20:49+00:00"
+        },
+        {
+            "name": "leadthread/php-google-shortener",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/leadthread/php-google-shortener.git",
+                "reference": "35ab0a6698973b1f5028b304811aef3df829fe0a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/leadthread/php-google-shortener/zipball/35ab0a6698973b1f5028b304811aef3df829fe0a",
+                "reference": "35ab0a6698973b1f5028b304811aef3df829fe0a",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.0",
+                "php": "^5.5.9|^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8|^5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LeadThread\\GoogleShortener\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tyler Arbon",
+                    "email": "tylercd100@gmail.com"
+                }
+            ],
+            "description": "Easily shorten URLs in PHP",
+            "homepage": "https://github.com/leadthread/php-google-shortener",
+            "keywords": [
+                "bitly",
+                "google url shortener",
+                "leadthread",
+                "shorten",
+                "tylercd100",
+                "url"
+            ],
+            "time": "2017-04-20T00:35:44+00:00"
+        },
+        {
             "name": "league/flysystem",
             "version": "1.0.42",
             "source": {
@@ -2016,6 +2164,54 @@
                 "uuid"
             ],
             "time": "2018-01-20T00:28:24+00:00"
+        },
+        {
+            "name": "shivella/laravel-bitly",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Shivella/laravel-bitly.git",
+                "reference": "f54dfaced5d7369abe619a8ab9d4029b52a50146"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Shivella/laravel-bitly/zipball/f54dfaced5d7369abe619a8ab9d4029b52a50146",
+                "reference": "f54dfaced5d7369abe619a8ab9d4029b52a50146",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~6.0",
+                "illuminate/support": "^5.1",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.1",
+                "symfony/http-foundation": "~3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Shivella\\Bitly": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Wessel Strengholt",
+                    "email": "wessel.strengholt@gmail.com"
+                }
+            ],
+            "description": "Laravel package for generating bitly url",
+            "homepage": "https://github.com/Shivella/laravel-bitly",
+            "keywords": [
+                "bitly",
+                "laravel",
+                "package"
+            ],
+            "time": "2017-09-29T07:54:06+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

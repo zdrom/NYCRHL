@@ -26,7 +26,7 @@ class AttendanceListController extends Controller
 
     public function status()
     {
-    	$response = AttendanceList::where('user_id', Auth::id())
+    	$response = AttendanceList::where('user_id', 'user_id')
     	->where('game_id', request()->game_id)
     	->first();
 

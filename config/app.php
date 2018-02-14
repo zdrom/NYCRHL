@@ -153,6 +153,8 @@ return [
 
         Weidner\Goutte\GoutteServiceProvider::class,
         Naughtonium\LaravelDarkSky\LaravelDarkSkyServiceProvider::class,
+        LeadThread\Shortener\ShortenerServiceProvider::class,
+
 
         /*
          * Application Service Providers...
@@ -214,6 +216,8 @@ return [
 
         'Goutte' => Weidner\Goutte\GoutteFacade::class,
         'DarkSky' => \Naughtonium\LaravelDarkSky\Facades\DarkSky::class,
+        "Shortener" => "LeadThread\Shortener\Facades\Shortener",
+
 
     ],
 

@@ -16,7 +16,12 @@ use Carbon\Carbon;
 
 Route::get('/', function ()
 {
-	return redirect()->route('home');
+
+	$user = Auth::user();
+
+	$user->games();
+
+	// return redirect()->route('home');
 });
 
 Route::get('team/{team}', 'TeamController@index');
@@ -27,7 +32,6 @@ Route::get('team/{team}/game/{game}', 'GameController@index');
 Route::post('game/cancel', 'GameController@cancel');
 Route::post('game/reschedule', 'GameController@reschedule');
 
-Route::get('rollCall', 'AttendanceListController@index');
 Route::post('player/status', 'AttendanceListController@status');
 
 Auth::routes();

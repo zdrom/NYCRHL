@@ -2,8 +2,11 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
+use Shortener;
 
 class User extends Authenticatable
 {
@@ -31,4 +34,5 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Team');
     }
+
 }
