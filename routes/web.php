@@ -17,22 +17,20 @@ use Carbon\Carbon;
 Route::get('/', function ()
 {
 
-	$user = Auth::user();
+	return redirect()->route('home');
 
-	$user->games();
-
-	// return redirect()->route('home');
 });
 
 Route::get('team/{team}', 'TeamController@index');
 
-Route::get('team/{team}/next', 'GameController@index');
+Route::get('team/{team}/next', 'GameController@nextGame');
 
 Route::get('team/{team}/game/{game}', 'GameController@index');
 Route::post('game/cancel', 'GameController@cancel');
 Route::post('game/reschedule', 'GameController@reschedule');
 
-Route::post('player/status', 'AttendanceListController@status');
+Route::get('player/status', 'AttendanceListController@status_get');
+Route::post('player/status', 'AttendanceListController@status_post');
 
 Auth::routes();
 

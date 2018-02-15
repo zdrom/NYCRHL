@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Team;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;

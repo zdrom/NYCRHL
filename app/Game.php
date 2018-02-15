@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Game extends Model
 {
@@ -11,31 +12,51 @@ class Game extends Model
         'id', 'home_team', 'away_team',  'date' ,'season'
     ];
 
-    static function findNextGames($arr)
+    static function upNext()
     {
 
-    	$nextGame = [$arr[0]];
+    	//All games for a users team
+        $games = Auth::user()->team->games()
+        ->toArray();
 
-    	foreach ($arr as $game => $game_info) {
+        $games = array_filter($games, function ($game)
+        {
+            //filter out games in the past
+            if (Carbon::now('America/New_York')->lte(Carbon::parse($game['date'] . 'EST'))) {
+                return true;
+            } else {
+                return false;
+            }
+        });
 
-    		if (count($nextGame) == 0) {
+        $upNext = [];
 
-    			if (Carbon::now()->lt(Carbon::parse($game_info['date']))) :
-    				
-    				array_push($nextGame, $game_info);
+        foreach ($games as $game => $game_info) :
 
-    			endif;
+            if (empty($upNext)) {
 
-    		} else {
+                array_push($upNext, $game_info);
 
-    			return 'hello';
+            } else {
 
-    		}
+                $comparison = Carbon::parse($game_info['date'] . 'EST')->startOfDay()->diffInDays(Carbon::parse($upNext[0]['date'] . 'EST')->startOfDay(), false);
 
+                switch (true) :
 
-    	}
+                    case $comparison == 0:
+                        array_push($upNext, $game_info);
+                        break;
 
-    	return $nextGame;
+                    case $comparison > 0:
+                        $upNext = [$game_info];
+                        break;
+
+                endswitch;
+            }
+
+        endforeach;
+
+        return $upNext;
 
     }
 }

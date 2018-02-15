@@ -90,9 +90,9 @@ class RollCall extends Command
             foreach ($upcoming_games_with_no_response as $game => $game_info) :
                 $message .= Carbon::parse($game_info['date'])->format('M j \a\t g:i a') . "\n\n";
                 $message .= "In\n";
-                $message .= Shortener::shorten(env('APP_URL') . '/player/status?user=' . $user_info['id'] . '&game_id=' . $game_info['id'] . '&attending=yes') . "\n\n";
+                $message .= Shortener::shorten(env('APP_URL') . '/player/status?user_id=' . $user_info['id'] . '&game_id=' . $game_info['id'] . '&status=yes') . "\n\n";
                 $message .= "Out\n";
-                $message .= Shortener::shorten(env('APP_URL') . '/player/status?user=' . $user_info['id'] . '&game_id=' . $game_info['id'] . '&attending=no') . "\n\n";
+                $message .= Shortener::shorten(env('APP_URL') . '/player/status?user_id=' . $user_info['id'] . '&game_id=' . $game_info['id'] . '&status=no') . "\n\n";
 
             endforeach;
             

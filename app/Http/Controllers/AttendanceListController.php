@@ -3,42 +3,43 @@
 namespace App\Http\Controllers;
 
 use App\AttendanceList;
+use App\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 
 class AttendanceListController extends Controller
 {
-    public function index()
+    public function status_post()
     {
 
     	$input = Input::all();
 
-    	$response = AttendanceList::find($input['attendance_id']);
+    	$response = AttendanceList::where('game_id', $input['game_id'])
+        ->where('user_id', Auth::id())
+        ->first();
 
-    	$response['attending'] = $input['attending'];
-
-    	$response->save();
-
-    	return redirect('/team/' . Auth::user()->team_id);
-
-    }
-
-    public function status()
-    {
-
-        //This route is hit via a form on the game page or via a url clicked in a text message. The text message does not require the user to be logged in and passes a user id. The form request requires the user to be logged in and does not pass user_id
-        $user_id = (request()->user_id) ? request()->user_id : Auth::id();
-
-    	$response = AttendanceList::where('user_id', $user_id)
-    	->where('game_id', request()->game_id)
-    	->first();
-
-    	$response->attending = request()->status;
+    	$response['attending'] = $input['status'];
 
     	$response->save();
 
     	return back();
 
     }
+
+    public function status_get()
+    {
+        $response = AttendanceList::where('game_id', request()->game_id)
+        ->where('user_id', request()->user_id)
+        ->first();
+
+        $response['attending'] = request()->status;
+
+        $response->save();
+
+        if (Auth::check()) :
+            return redirect('/team/' . Team::find(Auth::user()->team_id)->id . '/game/' . request()->game_id);
+        endif;
+    }
+
 }

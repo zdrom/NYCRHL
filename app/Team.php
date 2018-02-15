@@ -14,10 +14,14 @@ class Team extends Model
 
     public function games()
     {
+
+        //get all game for a team in date order
+
     	return 
 
     	Game::where('home_team', $this->name)
     	->orWhere('away_team', $this->name)
+        ->orderBy('date')
     	->get();
     	
     }

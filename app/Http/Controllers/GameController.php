@@ -16,7 +16,6 @@ class GameController extends Controller
 
 	public function index(Team $team, Game $game)
 	{
-
 		//converts date to unix timestamp which is required by the darksky API
 		$gameTimestamp = Carbon::parse($game->date)->timestamp;
 
@@ -24,19 +23,26 @@ class GameController extends Controller
 
 		$forecast = $forecast->location(40.7848427,-73.9514865)->atTime($gameTimestamp)->get('daily', 'currently');
 
-		$attendanceList = AttendanceList::where('game_id', $game->id)
-						  ->where('team_id', $team->id)
-						  ->get();
+		//Gets the attendance given a game or games and the team id
+		$attendance = AttendanceList::getAttendance($game, $team->id);
 
-		$attendance = [];
-
-		foreach ($attendanceList as $response => $response_details) :
-			
-			$attendance[User::find($response_details['user_id'])->name] = $response_details['attending'];
-
-		endforeach;
+		//Convert to array to use the attendance blade view
+		$game = $game->toArray();
 
 		return view('game.index', compact('team', 'game', 'chanceOfRainAtGameTime', 'attendance'));
+
+	}
+
+	public function nextGame(Team $team)
+	{
+
+		//returns an array of the games closest to the current date in the form of an array. Most of the time this will be a single value but can be more
+		$games = Game::upNext();
+
+		//Takes games or a game and a team id to get an attendance list
+		$attendance = AttendanceList::getAttendance($games, Auth::user()->team_id);
+
+		return view('game.upNext', compact('games', 'attendance', 'team'));
 
 	}
 
@@ -49,7 +55,6 @@ class GameController extends Controller
 		$game->save();
 
 		return back();
-		
 
 	}
 
@@ -65,7 +70,5 @@ class GameController extends Controller
 		return back();
 
 	}
-
-
 
 }
