@@ -26,7 +26,7 @@ class Weather extends Model
 
         foreach ($forecast->hourly->data as $hour => $hour_info) :
             
-            array_push($precip_probabilities, $hour_info->precipProbability);
+            array_push($precip_probabilities, $hour_info->precipProbability * 100);
 
         endforeach;
 
@@ -34,7 +34,8 @@ class Weather extends Model
 
     	[
 			'daily_summary' => $daily_summary,
-            'temp_at_game_time' => $temp_at_game_time
+            'temp_at_game_time' => $temp_at_game_time,
+            'precip_probabilities' => json_encode($precip_probabilities)
     	];
 
     }

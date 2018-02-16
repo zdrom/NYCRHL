@@ -17,7 +17,7 @@ class GameController extends Controller
 	public function index(Team $team, Game $game)
 	{
 
-		// $forecast = Weather::get($game->date);
+		$forecast = Weather::get($game->date);
 
 		//Gets the attendance given a game or games and the team id
 		$attendance = AttendanceList::getAttendance($game, $team->id);
@@ -25,7 +25,7 @@ class GameController extends Controller
 		//Convert to array to use the attendance blade view
 		$game = $game->toArray();
 
-		return view('game.index', compact('team', 'game', 'attendance'));
+		return view('game.index', compact('team', 'game', 'attendance', 'forecast'));
 
 	}
 
