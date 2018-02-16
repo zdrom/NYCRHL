@@ -13,7 +13,7 @@ class TeamController extends Controller
         
     	$games = $team->games();
 
-    	return view('team.index', compact('games'));
+    	return view('team.index', compact('games', 'team'));
 
     }
 }

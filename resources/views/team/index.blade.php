@@ -2,6 +2,11 @@
 
 @section('content')
 
+<div class="row justify-content-center mb-2">
+	<div class="col-md-6">
+		<h2 class="mb-0 text-white">{{ $team->name }}</h2>
+	</div>
+</div>
 
 @foreach($games as $game => $details)
 
@@ -26,7 +31,7 @@
 
 		@slot('body')
 
-		{{ $details->home_team }} vs. {{ $details->away_team }}
+		vs. @if($details->home_team == Auth::user()->team->name) {{ $details->away_team }} @else {{ $details->home_team }} @endif
 
 		@endslot
 

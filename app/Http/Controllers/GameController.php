@@ -6,22 +6,18 @@ use App\AttendanceList;
 use App\Game;
 use App\Team;
 use App\User;
+use App\Weather;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Naughtonium\LaravelDarkSky\DarkSky;
 
 class GameController extends Controller
 {
 
 	public function index(Team $team, Game $game)
 	{
-		//converts date to unix timestamp which is required by the darksky API
-		$gameTimestamp = Carbon::parse($game->date)->timestamp;
 
-		$forecast = new DarkSky;
-
-		$forecast = $forecast->location(40.7848427,-73.9514865)->atTime($gameTimestamp)->get('daily', 'currently');
+		// $forecast = Weather::get($game->date);
 
 		//Gets the attendance given a game or games and the team id
 		$attendance = AttendanceList::getAttendance($game, $team->id);
@@ -29,7 +25,7 @@ class GameController extends Controller
 		//Convert to array to use the attendance blade view
 		$game = $game->toArray();
 
-		return view('game.index', compact('team', 'game', 'chanceOfRainAtGameTime', 'attendance'));
+		return view('game.index', compact('team', 'game', 'attendance'));
 
 	}
 
@@ -39,10 +35,12 @@ class GameController extends Controller
 		//returns an array of the games closest to the current date in the form of an array. Most of the time this will be a single value but can be more
 		$games = Game::upNext();
 
+		$forecast = Weather::get($games[0]['date']);
+
 		//Takes games or a game and a team id to get an attendance list
 		$attendance = AttendanceList::getAttendance($games, Auth::user()->team_id);
 
-		return view('game.upNext', compact('games', 'attendance', 'team'));
+		return view('game.upNext', compact('games', 'attendance', 'team', 'forecast'));
 
 	}
 
