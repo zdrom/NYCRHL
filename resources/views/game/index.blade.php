@@ -14,37 +14,10 @@
 </div>
 @endif
 
-<div class="row mb-2 justify-content-center">
-	<div class="col-md-6">
-		@component('game.game')
-
-			@slot('header')
-				Game Info 
-			@endslot
-
-			@slot('date')
-
-				{{ \Carbon\Carbon::parse($game['date'])->format('l, F j') }}
-
-			@endslot
-
-			@slot('time')
-
-				{{ \Carbon\Carbon::parse($game['date'])->format('g:i a') }} <small class="text-muted">{{ \Carbon\Carbon::parse($game['date'])->diffForHumans() }}</small>
-
-			@endslot
-
-			@slot('body')
-
-			{{ $game['home_team'] }} vs. {{ $game['away_team'] }}
-
-			@endslot
-
-		@endcomponent
-	</div>
-</div>
-
 @include('game.weather')
+
+@include('game.info_header')
+@include('game.info')
 
 @include('game.attendance')
 

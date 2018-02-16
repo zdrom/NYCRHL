@@ -18,6 +18,8 @@
 	</div>
 </div>
 
+@include('game.weather')
+
 @php
 	$response = $attendance;
 @endphp
@@ -30,18 +32,14 @@
 		<h4 class="mb-0 text-white">Game {{ $key + 1  }}</h4>
 	</div>
 </div>
+@else 
+
+@include('game.info_header')
+
 @endif
 
-<div class="row justify-content-center">
-	<div class="col-md-6">
-		<div class="card card-inverse card-outline-secondary mb-2">
-			<h5 class="card-header">{{ \Carbon\Carbon::parse($game['date'] . 'EST')->format('g:i a') }} </h5>
-			<div class="card-block">
-				<p>{{ $game['home_team'] }} vs. {{ $game['away_team'] }}</p>
-			</div>
-		</div>
-	</div>
-</div>
+@include('game.info')
+
 @php
 
 	$attendance = $response[$game['id']];
@@ -52,7 +50,5 @@
 @include('game.settings')
 
 @endforeach
-				
-@include('game.weather')
 
 @endsection

@@ -48,7 +48,7 @@ class checkSchedule extends Command
             //Convert the date and time from the website to one value
             $date = $node->filter('td')->eq(5)->text();
             $time = $node->filter('td')->eq(6)->text();
-            $dateTime = Carbon::parse($date . $time  . ' 2017');
+            $dateTime = Carbon::parse($date . $time  . ' 2017' . 'EST');
 
             //The Game ID
             $id = intval($node->filter('td')->eq(0)->text());
@@ -77,7 +77,7 @@ class checkSchedule extends Command
             //If the game is in the DB, check to see if the date or time have changed. If it has, update the DB
             } else {
 
-                if ($dateTime->ne(Carbon::parse(Game::find($id)->date))) :
+                if ($dateTime->gt(Carbon::parse(Game::find($id)->date . 'EST'))) :
 
                     $game = Game::find($id);
                     
