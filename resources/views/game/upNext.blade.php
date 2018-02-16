@@ -38,6 +38,8 @@
 
 @endif
 
+@include('game.canceled')
+
 @include('game.info')
 
 @php
