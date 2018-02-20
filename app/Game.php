@@ -22,7 +22,7 @@ class Game extends Model
         $games = array_filter($games, function ($game)
         {
             //filter out games in the past
-            if (Carbon::now('America/New_York')->lte(Carbon::parse($game['date'] . 'EST'))) {
+            if (Carbon::parse($game['date'] . 'EST')->isFuture()) {
                 return true;
             } else {
                 return false;

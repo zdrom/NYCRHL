@@ -18,7 +18,7 @@
 	</div>
 </div>
 
-@if(\Carbon\Carbon::parse($games[0]['date'] . 'EST')->diffInDays(\Carbon\Carbon::now()) <= 7)
+@if(\Carbon\Carbon::parse($games[0]['date'] . 'EST')->diffInDays(\Carbon\Carbon::now()) <= 5 && \Carbon\Carbon::parse($games[0]['date'] . 'EST')->isFuture())
 
 @include('game.weather')
 
@@ -36,16 +36,17 @@
 		<h4 class="mb-0 text-white">Game {{ $key + 1  }}</h4>
 	</div>
 </div>
-@else 
+@else
 
 @include('game.info_header')
 
 @endif
 
 @include('game.canceled')
-@include('game.settings')
 
 @include('game.info')
+
+@include('game.settings')
 
 @php
 

@@ -35,3 +35,8 @@ Route::post('player/status', 'AttendanceListController@status_post');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/logout', function () {
+    Auth::logout();
+    return redirect('login');
+});

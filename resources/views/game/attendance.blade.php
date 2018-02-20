@@ -10,7 +10,7 @@
 
 		<div class="card card-outline-success mb-2">
 			<div class="card-header bg-success">
-				<h5 class="mb-0">In <span class="badge badge-default">Success</span></h5>
+				<h5 class="mb-0">In</h5>
 			</div>
 			<ul class="list-group list-group-flush">
 

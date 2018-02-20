@@ -1,8 +1,8 @@
 @auth
 
-<div class="row mb-2 justify-content-center">
+<div class="row mb-4 justify-content-center">
 	<div class="col-md-6">
-		<a class="btn btn-outline-info btn-block" data-toggle="collapse" href="#settings{{ $game['id'] }}" role="button" aria-expanded="false" aria-controls="collapseExample">
+		<a class="btn btn-outline-secondary btn-block" data-toggle="collapse" href="#settings{{ $game['id'] }}" role="button" aria-expanded="false" aria-controls="collapseExample">
 			Settings
 		</a>
 	</div>
@@ -11,8 +11,8 @@
 
 <div class="collapse" id="settings{{ $game['id'] }}">
 
-	<div class="row mb-2 justify-content-center">
-		<div class="col-md-6">
+	<div class="row mb-4 justify-content-center">
+		<div class="col-md-5">
 
 			<div class="card card-inverse card-outline-secondary">
 				

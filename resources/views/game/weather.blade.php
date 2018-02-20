@@ -19,35 +19,36 @@
 </div>
 
 <script type="text/javascript">
-	
-var data = {
-	labels: {!! $forecast['precip_probability_labels'] !!}, 
-	datasets: [
-		{
-			label: '% Chance of Precipitation',
-			data: {{ $forecast['precip_probabilities'] }},
-			backgroundColor: [
-                'rgba(0,0,100, 0.2)'
-            ],
-		}
-	],
-
-	options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
-    }
-}
 
 var context = document.querySelector('#precip_probability').getContext('2d');
 
 new Chart(context , {
     type: "line",
-    data: data, 
+
+    data: {
+
+    	labels: {!! $forecast['precip_probability_labels'] !!}, 
+		datasets: [{
+			label: '% Chance of Precipitation',
+			data: {{ $forecast['precip_probabilities'] }},
+			backgroundColor: [
+	            'rgba(0,0,220, 0.3)'
+	        ],
+		}]
+
+    },
+
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    suggestedMin: 50,
+                    suggestedMax: 100
+                }
+            }]
+        }
+    }
+
 });
 
 </script>

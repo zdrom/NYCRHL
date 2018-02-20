@@ -19,6 +19,9 @@
       <li class="nav-item">
         <a target="#" class="nav-link" href="http://nycrhl.pointstreaksites.com/view/nycrhl/home-page-657">League Site</a>
       </li>
+      <li class="nav-item">
+        <a target="#" class="nav-link" href="/logout">Logout</a>
+      </li>
     </ul>
   </div>
 </nav>

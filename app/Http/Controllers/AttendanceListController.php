@@ -37,9 +37,16 @@ class AttendanceListController extends Controller
 
         $response->save();
 
-        if (Auth::check()) :
+        if (Auth::check()) {
+
             return redirect('/team/' . Team::find(Auth::user()->team_id)->id . '/game/' . request()->game_id);
-        endif;
+
+        } else {
+
+            return view('attendance/confirmation');
+
+        }
+        
     }
 
 }
