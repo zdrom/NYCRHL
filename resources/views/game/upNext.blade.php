@@ -18,7 +18,11 @@
 	</div>
 </div>
 
+@if(\Carbon\Carbon::parse($games[0]['date'] . 'EST')->diffInDays(\Carbon\Carbon::now()) <= 7)
+
 @include('game.weather')
+
+@endif
 
 @php
 	$response = $attendance;
