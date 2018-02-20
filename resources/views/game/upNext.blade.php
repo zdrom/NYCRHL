@@ -43,6 +43,7 @@
 @endif
 
 @include('game.canceled')
+@include('game.settings')
 
 @include('game.info')
 
@@ -53,7 +54,6 @@
 @endphp
 
 @include('game.attendance')
-@include('game.settings')
 
 @endforeach
 

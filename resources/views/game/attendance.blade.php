@@ -10,13 +10,13 @@
 
 		<div class="card card-outline-success mb-2">
 			<div class="card-header bg-success">
-				<h5 class="mb-0">In</h5>
+				<h5 class="mb-0">In <span class="badge badge-default">Success</span></h5>
 			</div>
 			<ul class="list-group list-group-flush">
 
 				@foreach($attendance as $name => $response)
 					@if($response == 'yes')
-					<li class="list-group-item bg-inverse card-inverse">{{ $name }}</li>
+					<li class="list-group-item list-group-item bg-inverse card-inverse">{{ $name }}</li>
 					@endif
 				@endforeach
 
