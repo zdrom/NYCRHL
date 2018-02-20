@@ -21,12 +21,26 @@
 <script type="text/javascript">
 	
 var data = {
-	labels: ['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13'], 
+	labels: {!! $forecast['precip_probability_labels'] !!}, 
 	datasets: [
 		{
-			data: {{ $forecast['precip_probabilities'] }}
+			label: '% Chance of Precipitation',
+			data: {{ $forecast['precip_probabilities'] }},
+			backgroundColor: [
+                'rgba(0,0,100, 0.2)'
+            ],
 		}
-	]
+	],
+
+	options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
 }
 
 var context = document.querySelector('#precip_probability').getContext('2d');
